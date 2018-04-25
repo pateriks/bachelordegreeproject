@@ -31,7 +31,6 @@ public class testModel_1 {
         /*
             model : 10:0d4dc265-b7aa-4951-aa60-cfca40471a20
          */
-
         EntitiesOptions entities = new EntitiesOptions.Builder().model("10:0d4dc265-b7aa-4951-aa60-cfca40471a20").emotion(false).sentiment(true).limit(100).build();
         ConceptsOptions co = new ConceptsOptions.Builder().limit(100).build();
         CategoriesOptions cao = new CategoriesOptions();
@@ -40,7 +39,6 @@ public class testModel_1 {
         EmotionOptions eo = new EmotionOptions.Builder().document(false).targets(ls).build();
         Features features = new Features.Builder().entities(entities).concepts(co).categories(cao).emotion(eo).build();
         AnalyzeOptions parameters = new AnalyzeOptions.Builder().url("https://people.kth.se/~pateriks/718.txt").features(features).build();
-
         AnalysisResults results = service.analyze(parameters).execute();
         System.out.println(results);
     }
