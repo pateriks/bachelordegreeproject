@@ -1,5 +1,3 @@
-package utility;
-
 import cern.colt.Arrays;
 import com.ibm.watson.developer_cloud.natural_language_understanding.v1.NaturalLanguageUnderstanding;
 import com.ibm.watson.developer_cloud.natural_language_understanding.v1.model.*;
@@ -17,12 +15,12 @@ import java.util.List;
 public class testConvertion_1 {
     public static void main (String[] args) {
 
-        File inputTxt = Paths.getFile("FULLTEXT01_Converted");
+        File inputTxt = utility.Paths.getFile("FULLTEXT01_Converted");
         String iS;
 
         try {
 
-            iS = Arrays.toString(Files.lines(Paths.getFile("FULLTEXT01_Converted").toPath(), StandardCharsets.ISO_8859_1).toArray());
+            iS = Arrays.toString(Files.lines(utility.Paths.getFile("FULLTEXT01_Converted").toPath(), StandardCharsets.ISO_8859_1).toArray());
             String svar = uno(iS);
             System.err.println(svar);
 
@@ -32,7 +30,7 @@ public class testConvertion_1 {
 
             System.out.println(svar);
 
-            Paths.convertJson2Cvs(new JSONObject(svar));
+            utility.Paths.convertJson2Cvs(new JSONObject(svar));
 
         }catch (Exception e){
             e.printStackTrace();

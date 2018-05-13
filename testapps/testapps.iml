@@ -8,10 +8,10 @@
     </content>
     <orderEntry type="jdk" jdkName="9.0" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="com.ibm.watson.developer_cloud:cognitive-client-java:1.0" level="project" />
     <orderEntry type="library" name="org.apache.spark:spark-core_2.11:2.3.0" level="project" />
     <orderEntry type="library" name="org.apache.spark:spark-mllib_2.10:1.1.0" level="project" />
     <orderEntry type="library" name="org.apache.spark:spark-sql_2.10:1.1.0" level="project" />
     <orderEntry type="library" name="org.apache.spark:spark-examples_2.10:1.1.0" level="project" />
+    <orderEntry type="library" name="com.ibm.watson.developer_cloud:java-sdk:5.4.1-SNAPSHOT" level="project" />
   </component>
 </module>
