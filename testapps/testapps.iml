@@ -13,5 +13,6 @@
     <orderEntry type="library" name="org.apache.spark:spark-sql_2.10:1.1.0" level="project" />
     <orderEntry type="library" name="org.apache.spark:spark-examples_2.10:1.1.0" level="project" />
     <orderEntry type="library" name="com.ibm.watson.developer_cloud:java-sdk:5.4.1-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="javax.json:javax.json-api:1.1" level="project" />
   </component>
 </module>

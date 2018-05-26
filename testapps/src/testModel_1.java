@@ -5,7 +5,7 @@ import java.io.*;
 import java.util.*;
 
 /*
-Test av nlu modell version 1.0
+Test av NLU version 1.0
 
 Användning:
 
@@ -13,43 +13,33 @@ Kör testModel_1 i en JVM
 välj om input sker från fil (1) eller skrivs in i commandotolken (2)
 (1) input filer ska finnas i en mapp "root/temp" och vara på formatet (String username, String password, String modelId)
 om särskild modelId inte används lämnas fältet som en tom String.
-(2) skriv in respektive fält som blir frågat efter i commandotolken.
+(2) skriv in respektive fält som blir begärt i commandotolken.
 
 Skriv in en söksträng som ska användas på NLU-tjänsten. Använd några av test texterna.
 Exempel: "Extract entities and categories from the text about coffee" (antal söksträngar håller på att byggas ut)
 
-Svar från NLU tjänsten printas nu ut i kommando tolken om allting lyckats.
+Svar från NLU tjänsten printas ut i standardoutput om allting lyckats.
 
 */
 /* Kommentar av utvecklare
 
 Interpreter
-{
-  "url": "https://gateway.watsonplatform.net/natural-language-understanding/api",
-  "username": "75099d61-45f6-43f6-9f77-27977c5db72e",
-  "password": "0Q0vQSTjBR0M"
-  "modelId" : "10:7a7fc498-8251-492d-bc5d-4140df1b2cd5"
-}
- Temp_0 : NLU standardmodell
- Temp_1 : NLU personmodell
- Temp_2 : NLU forskningsfrågamodell
+    "url": "https://gateway.watsonplatform.net/natural-language-understanding/api",
+    "username": "75099d61-45f6-43f6-9f77-27977c5db72e",
+    "password": "0Q0vQSTjBR0M"
+    "modelId" : "10:7a7fc498-8251-492d-bc5d-4140df1b2cd5"
 
-Använd för test av N/A:
+Skapa laddningsfil (exempel):
+    save.put("doc1", "9973020c8f56e75c368214ec60cb0f97");
+    save.put("doc2", "cd5776681625a0b16dfca707ba5385fa");
+    save.put("doc3", "296c0131-90d7-4863-89ac-e35f7c7f4aa0");
+    utility.Paths.saveObj(save);
 
-                    "username": "20cf182b-9835-4342-b8d0-5ad14f6818c7",
-                    "password": "522jNIAhAjhK"
-                    "modelId": "10:0d4dc265-b7aa-4951-aa60-cfca40471a20"
+Laddningsfiler:
+    Temp_0 : NLU standardmodell
+    Temp_1 : NLU personmodell
+    Temp_2 : NLU forskningsfrågamodell
 
-Använd för test av egen model (research question)
-
-                    "username": "4737dd5e-2d4b-4e6d-8387-bafb7330df29",
-                    "password": "Lc2CgDxQbqYK"
-                    "modelId": "10:0fe98de0-4202-4507-a8b2-5ea33f8a524e"
-
-Använd för test av personer
-                     "username": "71de81c4-c61d-4130-94fb-8fd412930587",
-                     "password": "ECuJEXK7ridS"
-                     "modelId": "10:2722fc5d-c1df-48a7-8a87-082c111767a7"
 */
 
 public class testModel_1 {
@@ -91,7 +81,7 @@ public class testModel_1 {
                 MODELID = (String) objectInputStream.readObject();
                 objectInputStream.close();
             } catch (Exception e) {
-                e.printStackTrace();
+                System.out.println("Illegal format");
             }
         }else{
             System.out.println("Version: ");
@@ -109,9 +99,9 @@ public class testModel_1 {
 
         /* Skapande av en service instans (använder internet) */
         NaturalLanguageUnderstanding service = new NaturalLanguageUnderstanding(
-        VERSION,
-        USERNAME,
-        PASSWORD
+            VERSION,
+            USERNAME,
+            PASSWORD
         );
         /* slut av service instansiering */
 
@@ -122,7 +112,7 @@ public class testModel_1 {
                 "0Q0vQSTjBR0M"
         );
 
-        AnalysisResults as = analyse(service2, query);
+        AnalysisResults as = analyseQuery(service2, query);
         Iterator <EntitiesResult> it = as.getEntities().iterator();
         String doc = ""; String ext = ""; String tar = "";
         while(it.hasNext()){
@@ -160,7 +150,12 @@ public class testModel_1 {
         } else {
             file = "750.txt";
         }
-        String input = utility.Paths.readFile(file);
+        String input = null;
+        try {
+            input = utility.Paths.readFile(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         System.out.println("Analyserad text:");
         System.out.println("Start of output ****************************");
         System.out.println(input);
@@ -172,23 +167,35 @@ public class testModel_1 {
         EmotionOptions eo = null;
         EntitiesOptions entities = null;
         if (MODELID.equalsIgnoreCase("")){
-            entities = new EntitiesOptions.Builder().emotion(false).sentiment(false).limit(100).build();
+            entities = new EntitiesOptions.Builder().emotion(false).sentiment(false).limit(2).build();
         }else{
-            entities = new EntitiesOptions.Builder().emotion(false).sentiment(false).limit(100).model(MODELID).build();
+            entities = new EntitiesOptions.Builder().emotion(false).sentiment(false).limit(2).model(MODELID).build();
         }
         features.entities(entities);
-        if(extract.contains("concepts")) {
-            co = new ConceptsOptions.Builder().limit(100).build();
+        if(extract.contains("concepts") || extract.contains("all")) {
+            co = new ConceptsOptions.Builder().limit(2).build();
             features.concepts(co);
         }
-        if(extract.contains("categories")) {
+        if(extract.contains("categories") || extract.contains("all")) {
             cao = new CategoriesOptions();
             features.categories(cao);
+        }
+        if(extract.contains("keywords") || extract.contains("all")) {
+            KeywordsOptions key = new KeywordsOptions.Builder().limit(6).build();
+            features.keywords(key);
+        }
+        if(extract.contains("relations") || extract.contains("all")) {
+            RelationsOptions rel = new RelationsOptions.Builder().build();
+            features.relations(rel);
+        }
+        if(extract.contains("semanticroles") || extract.contains("all")) {
+            SemanticRolesOptions sem = new SemanticRolesOptions.Builder().entities(true).keywords(true).limit(10).build();
+            features.semanticRoles(sem);
         }
         List<String> ls = new ArrayList<>();
         if(target.equalsIgnoreCase("")) ls.add(target);
         else ls.add(test);
-        if(extract.contains("emotions")) {
+        if(extract.contains("emotions") || extract.contains("alls")) {
             if (target.equalsIgnoreCase("text")) {
                 eo = new EmotionOptions.Builder().document(true).targets(ls).build();
                 features.emotion(eo);
@@ -208,8 +215,8 @@ public class testModel_1 {
         System.out.println("End of output ******************************");
     }
 
-    public static AnalysisResults analyse (NaturalLanguageUnderstanding service, String toAnalyse){
-        EntitiesOptions entities = new EntitiesOptions.Builder().model("10:7a7fc498-8251-492d-bc5d-4140df1b2cd5").build();
+    public static AnalysisResults analyseQuery(NaturalLanguageUnderstanding service, String toAnalyse){
+        EntitiesOptions entities = new EntitiesOptions.Builder().model("10:314cdc8b-aea3-4dc0-b6c2-e4ec72e61f89").build();
         Features features = new Features.Builder().entities(entities).build();
         AnalyzeOptions parameters = new AnalyzeOptions.Builder().text(toAnalyse).features(features).build();
         AnalysisResults results = service.analyze(parameters).execute();
