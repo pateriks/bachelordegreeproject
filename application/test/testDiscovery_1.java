@@ -20,7 +20,7 @@ Användning:
 Kör testDiscovery_1 i en JVM
 Skriv in en vad för test du vill göra.
 Exempel:
-(*) "Upload VendorLockin.pdf to Discovery"
+(*) "Upload <FileName.ext> to Discovery"
 (*) "Query document"
 
 Välj om input sker från fil (1) eller skrivs in i commandotolken (2)
@@ -30,7 +30,7 @@ om särskild modelId inte används lämnas fältet som en tom String OBS det må
 om särskilt fält inte används lämas fältet som en tom String
 
 För query test: skriv in en söksträng som ska användas på Discovery-tjänsten (för beriknings extraktion). Använd några av test texterna.
-Exempel: "Extract entities, keywords and semantic roles from <insertFileName>" (antal söksträngar håller på att byggas ut)
+Exempel: "Extract entities, keywords and semantic roles from <FileName.ext>"
 
 Svar från NLU tjänsten printas nu ut i kommando tolken om allting lyckats.
 */
@@ -49,7 +49,7 @@ Skapa laddningsfil (exempel):
     save.put("doc3", "296c0131-90d7-4863-89ac-e35f7c7f4aa0");
     utility.Paths.saveObj(save);
 
-Aktuella laddningsfiler:
+Sparade laddningsfiler:
     Temp_3: Dicovery-xo credentials
     Temp_4: API Collection; environment, collection och configuration (anpassad modell)
     Temp_5: List of uploaded documentIds (deleted 2018-05-12).
@@ -57,6 +57,7 @@ Aktuella laddningsfiler:
     Temp_7: Discovery teststandardLIMITED credentials
     Temp_8: Discovery testPerson environment
     Temp_9: Discovery teststandardLIMITED API Collection ids
+    
 */
 public class testDiscovery_1 {
 
@@ -69,9 +70,6 @@ public class testDiscovery_1 {
     static HashMap<String, String> DOCUMENT_IDS;
 
     public static final HashMap<String, String> save = new HashMap<>();
-
-    public testDiscovery_1() throws FileNotFoundException {
-    }
 
     public static void main (String[] args) {
 
