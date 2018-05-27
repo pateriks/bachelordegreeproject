@@ -1,0 +1,9 @@
+{
+  "entities": {
+    "limit": 100,
+    "model": "10:2722fc5d-c1df-48a7-8a87-082c111767a7",
+    "sentiment": true,
+    "emotion": false
+  },
+  "categories": {}
+}

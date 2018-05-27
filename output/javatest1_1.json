@@ -1,0 +1,152 @@
+{
+  "language": "en",
+  "usage": {
+    "features": 2
+  },
+  "entities": [
+    {
+      "type": "Person",
+      "count": 1,
+      "text": "Steve Jobs",
+      "sentiment": {
+        "score": -0.495521
+      },
+      "disambiguation": {
+        "name": "Steve Jobs",
+        "dbpedia_resource": "http://dbpedia.org/resource/Steve_Jobs",
+        "subtype": [
+          "Person",
+          "BoardMember",
+          "CompanyFounder",
+          "ComputerDesigner",
+          "FilmProducer"
+        ]
+      }
+    },
+    {
+      "type": "Person",
+      "count": 1,
+      "text": "Desmond Tutu",
+      "sentiment": {
+        "score": 0.0
+      },
+      "disambiguation": {
+        "name": "Desmond Tutu",
+        "dbpedia_resource": "http://dbpedia.org/resource/Desmond_Tutu",
+        "subtype": [
+          "Person",
+          "AwardWinner",
+          "ChivalricOrderMember",
+          "ChristianBishop",
+          "FilmActor",
+          "TVActor"
+        ]
+      }
+    },
+    {
+      "type": "Person",
+      "count": 1,
+      "text": "I",
+      "sentiment": {
+        "score": 0.0
+      },
+      "disambiguation": {
+        "subtype": [
+          "NONE"
+        ]
+      }
+    },
+    {
+      "type": "Person",
+      "count": 1,
+      "text": "Emeka Okoye",
+      "sentiment": {
+        "score": 0.0
+      },
+      "disambiguation": {
+        "subtype": [
+          "NONE"
+        ]
+      }
+    },
+    {
+      "type": "Person",
+      "count": 1,
+      "text": "Ridwan Olalere",
+      "sentiment": {
+        "score": 0.0
+      },
+      "disambiguation": {
+        "subtype": [
+          "NONE"
+        ]
+      }
+    },
+    {
+      "type": "Person",
+      "count": 1,
+      "text": "Anie M. Akpe",
+      "sentiment": {
+        "score": -0.34711
+      },
+      "disambiguation": {
+        "subtype": [
+          "NONE"
+        ]
+      }
+    },
+    {
+      "type": "Person",
+      "count": 1,
+      "text": "she",
+      "sentiment": {
+        "score": 0.0
+      },
+      "disambiguation": {
+        "subtype": [
+          "NONE"
+        ]
+      }
+    },
+    {
+      "type": "Person",
+      "count": 1,
+      "text": "Victor Asemota",
+      "sentiment": {
+        "score": 0.401358
+      },
+      "disambiguation": {
+        "subtype": [
+          "NONE"
+        ]
+      }
+    },
+    {
+      "type": "Person",
+      "count": 1,
+      "text": "He",
+      "sentiment": {
+        "score": 0.0
+      },
+      "disambiguation": {
+        "subtype": [
+          "NONE"
+        ]
+      }
+    }
+  ],
+  "categories": [
+    {
+      "label": "/travel/tourist destinations/africa",
+      "score": 0.454634
+    },
+    {
+      "label": "/technology and computing",
+      "score": 0.334818
+    },
+    {
+      "label": "/technology and computing/operating systems/linux",
+      "score": 0.314489
+    }
+  ]
+}

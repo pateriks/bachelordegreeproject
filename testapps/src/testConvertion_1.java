@@ -1,18 +1,14 @@
 package utility;
 
 import cern.colt.Arrays;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.ibm.watson.developer_cloud.natural_language_understanding.v1.NaturalLanguageUnderstanding;
 import com.ibm.watson.developer_cloud.natural_language_understanding.v1.model.*;
-import org.json.JSONObject;
 
 import java.io.File;
-import java.io.InputStream;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
 
 public class testConvertion_1 {
     public static void main (String[] args) {
@@ -31,8 +27,9 @@ public class testConvertion_1 {
             svar = svar.replace("\n", "");
 
             System.out.println(svar);
-
-            Paths.convertJson2Cvs(new JSONObject(svar));
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.add("svar", new JsonParser().parse(svar));
+            Paths.convertJson2Cvs(jsonObject);
 
         }catch (Exception e){
             e.printStackTrace();
