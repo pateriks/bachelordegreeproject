@@ -15,13 +15,14 @@ Test av NLU version 1.0
 Användning:
 
 Kör testModel_1 i en JVM
-välj om input sker från fil (1) eller skrivs in i commandotolken (2)
+välj om input sker från fil (1) eller skrivs in i kommandotolken (2)
 (1) input filer ska finnas i en mapp "root/temp" och vara på formatet (String username, String password, String modelId)
 om särskild modelId inte används lämnas fältet som en tom String.
 (2) skriv in respektive fält som blir begärt i commandotolken.
 
 Skriv in en söksträng som ska användas på NLU-tjänsten. Använd några av test texterna.
-Exempel: "Extract entities and categories from the text about coffee" (antal söksträngar håller på att byggas ut)
+Exempel: "Extract entities and categories from the text about coffee"
+Exempel: "Extract entities and concepts from the ubuntu text"
 
 Svar från NLU tjänsten printas ut i standardoutput om allting lyckats.
 
@@ -33,12 +34,6 @@ Interpreter
     "username": "75099d61-45f6-43f6-9f77-27977c5db72e",
     "password": "0Q0vQSTjBR0M"
     "modelId" : "10:7a7fc498-8251-492d-bc5d-4140df1b2cd5"
-
-Skapa laddningsfil (exempel):
-    save.put("doc1", "9973020c8f56e75c368214ec60cb0f97");
-    save.put("doc2", "cd5776681625a0b16dfca707ba5385fa");
-    save.put("doc3", "296c0131-90d7-4863-89ac-e35f7c7f4aa0");
-    utility.Paths.saveObj(save);
 
 Laddningsfiler:
     Temp_0 : NLU standardmodell
