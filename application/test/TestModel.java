@@ -117,7 +117,7 @@ public class TestModel {
         String doc = ""; String ext = ""; String tar = "";
         while(it.hasNext()){
             EntitiesResult er = it.next();
-            System.out.println(er.getType() + " " + er.getText());
+            System.err.println(er.getType() + " " + er.getText());
             if(er.getType().equalsIgnoreCase("document")){
                 System.err.println("doc: " + er.getText());
                 doc = er.getText();
@@ -129,7 +129,7 @@ public class TestModel {
                 tar = er.getText();
             }
         }
-        System.out.println("Query[\n" + "Doc{" + doc + "}\nExtract{" + ext + "}\nTarget{" + tar + "}]");
+        System.out.println("\"query\":[{\n" + "\"doc\":\"" + doc + "\"\n\"extract\":\"" + ext + "\"\n\"target\":\"" + tar + "\"\n}]");
         /* slut hämtning av query */
 
         /* Tester att utföra */

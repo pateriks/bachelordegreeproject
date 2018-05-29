@@ -221,7 +221,7 @@ public class TestDiscovery {
             Iterator<EntitiesResult> it = as.getEntities().iterator();
             while (it.hasNext()) {
                 EntitiesResult er = it.next();
-                System.out.println(er.getType() + " " + er.getText());
+                System.err.println(er.getType() + " " + er.getText());
                 if (er.getType().equalsIgnoreCase("document")) {
                     System.err.println("doc: " + er.getText());
                     doc = er.getText();
