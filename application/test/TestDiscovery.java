@@ -120,7 +120,7 @@ public class TestDiscovery {
                     if (entity.getType().equalsIgnoreCase("Discovery_test")) {
                         List <String> subTypes = null;
                         if((subTypes = entity.getDisambiguation().getSubtype()).isEmpty()){
-                            System.out.println("Try again or enter break");
+                            System.out.println("Try again or type \"break\"");
                             test = in.nextLine();
                             continue;
                         }
