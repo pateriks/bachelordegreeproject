@@ -30,9 +30,14 @@ om särskild modelId inte används lämnas fältet som en tom String OBS det må
 om särskilt fält inte används lämas fältet som en tom String
 
 För query test: skriv in en söksträng som ska användas på Discovery-tjänsten (för beriknings extraktion). Använd några av test texterna.
-Exempel: "Extract entities, keywords and semantic roles from <FileName.ext>"
+Exempel: "Extract all from <FileName.ext>"
+OBS all är entities, keyword och semantic roles
 
 Svar från NLU tjänsten printas nu ut i kommando tolken om allting lyckats.
+
+Exempel på en exekvering:
+    "Query document" + enter + "y" + enter + "Temp_3" + enter + "Temp_4" + enter + enter + "Extract all from VendorLockin.pdf" + enter
+
 */
 
 /* Kommentar av utvecklare
@@ -149,7 +154,8 @@ public class TestDiscovery {
                 MODEL_ID = (String) objectInputStream.readObject();
                 objectInputStream.close();
             } catch (Exception e) {
-                e.printStackTrace();
+                System.out.println("Problem reading file" + setupData);
+                System.exit(1);
             }
             System.out.println("Collection API file?");
             setupData = in.nextLine();
@@ -163,7 +169,8 @@ public class TestDiscovery {
                 configurationId = (String) objectInputStream.readObject();
                 objectInputStream.close();
             } catch (Exception e) {
-                e.printStackTrace();
+                System.out.println("Problem reading file" + setupData);
+                System.exit(1);
             }
             if(test.contains("delete")) {
                 System.err.println("delete");
@@ -174,13 +181,15 @@ public class TestDiscovery {
                     try {
                         fileInputStream2 = utility.Paths.getWorkingFileInputStream(testData);
                     } catch (IOException e) {
-
+                        System.out.println("Problem reading file" + testData);
+                        System.exit(1);
                     }
                     ObjectInputStream objectInputStream2 = new ObjectInputStream(fileInputStream2);
                     DOCUMENT_IDS = (HashMap<String, String>) objectInputStream2.readObject();
                     objectInputStream2.close();
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    System.out.println("Error parsing input data");
+                    System.exit(1);
                 }
             }else{
                 System.out.println("Session? (if not used leave blank)");
@@ -190,7 +199,7 @@ public class TestDiscovery {
                     try {
                         DOCUMENT_IDS.putAll((Map) new ObjectInputStream(utility.Paths.getWorkingFileInputStream(name)).readObject());
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        System.out.println("Error parsing input data");
                     }
                     System.out.println("More files?");
                     name = in.nextLine();
@@ -348,7 +357,7 @@ public class TestDiscovery {
         QueryOptions.Builder queryBuilder = new QueryOptions.Builder(environmentId, collectionId);
 
         //Example queries
-        if(queries.equals(null)) {
+        if(method.equalsIgnoreCase("")) {
             queries = new String[9];
             queries[0] = "enriched_text.entities.text::\"time\"";
             queries[1] = "enriched_text.entities.text,count:2";
@@ -386,7 +395,7 @@ public class TestDiscovery {
         try {
             builder.file(utility.Paths.getFile(fileName)).filename(fileName);
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            System.out.println("Can not find file: " + fileName);
         }
         DocumentAccepted documentAccepted = discovery.addDocument(builder.build()).execute();
         System.out.println(documentAccepted.toString());
@@ -403,7 +412,7 @@ public class TestDiscovery {
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                System.out.println("Unexpected internal error");
             }
             i++;
         }
