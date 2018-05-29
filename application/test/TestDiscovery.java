@@ -17,7 +17,7 @@ Test av Discovery version 1.0
 
 Användning:
 
-Kör testDiscovery_1 i en JVM
+Kör TestDiscovery i en JVM
 Skriv in en vad för test du vill göra.
 Exempel:
 (*) "Upload <FileName.ext> to Discovery"
@@ -59,7 +59,7 @@ Sparade laddningsfiler:
     Temp_9: Discovery teststandardLIMITED API Collection ids
     
 */
-public class testDiscovery_1 {
+public class TestDiscovery {
 
     private static String VERSION = "2018-05-03";
     private static String USERNAME = "{username}";

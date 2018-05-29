@@ -14,7 +14,7 @@ Test av NLU version 1.0
 
 Användning:
 
-Kör testModel_1 i en JVM
+Kör TestModel i en JVM
 välj om input sker från fil (1) eller skrivs in i kommandotolken (2)
 (1) input filer ska finnas i en mapp "root/temp" och vara på formatet (String username, String password, String modelId)
 om särskild modelId inte används lämnas fältet som en tom String.
@@ -42,7 +42,7 @@ Laddningsfiler:
 
 */
 
-public class testModel_1 {
+public class TestModel {
 
     private static String API_URL = "https://gateway.watsonplatform.net/natural-language-understanding/api";
     private static String VERSION = "2018-05-03";
@@ -143,23 +143,35 @@ public class testModel_1 {
         extract = extract.toLowerCase();
         target = target.toLowerCase();
         String file;
+        String url = null;
         if (test.equalsIgnoreCase("coffee")) {
             file = "718.txt";
-        } else if (test.equalsIgnoreCase("food")) {
-            file = "745.txt";
-        } else {
+            url = "https://edition.cnn.com/2015/04/01/africa/ethiopia-coffee-industry/index.html";
+
+        } else if (test.equalsIgnoreCase("ubuntu")) {
             file = "750.txt";
+            url = "https://edition.cnn.com/2018/03/26/africa/ubuntu---the-african-concept-of-community-/index.html";
+        } else {
+            file = "751.txt";
+            //url = "https://edition.cnn.com/2018/03/22/health/bee-sting-acupuncture-kills-woman-diagnosis-unusual/index.html";
         }
         String input = null;
+        /* Out put the file if txt file is used */
         try {
-            input = utility.Paths.readFile(file);
-        } catch (IOException e) {
-            e.printStackTrace();
+            url.equals("testNull");
+        }catch (NullPointerException npe){
+            try {
+                input = utility.Paths.readFile(file);
+            } catch (IOException ioe) {
+                System.err.println("IO exception in line: " + 164);
+                System.out.println("Failed loading file: " + file);
+                System.exit(1);
+            }
+            System.out.println("Analyserad text:");
+            System.out.println("Start of output ****************************");
+            System.out.println(input);
+            System.out.println("End of output ******************************");
         }
-        System.out.println("Analyserad text:");
-        System.out.println("Start of output ****************************");
-        System.out.println(input);
-        System.out.println("End of output ******************************");
         /* Anropa API REST */
         Features.Builder features = new Features.Builder();
         ConceptsOptions co = null;
@@ -204,7 +216,14 @@ public class testModel_1 {
                 features.emotion(eo);
             }
         }
-        AnalyzeOptions parameters = new AnalyzeOptions.Builder().text(input).features(features.build()).build();
+        AnalyzeOptions parameters = null;
+        try{
+            url.equals("testNull");
+            parameters = new AnalyzeOptions.Builder().url(url).features(features.build()).build();
+        }catch (NullPointerException e){
+            e.printStackTrace();
+            parameters = new AnalyzeOptions.Builder().text(input).features(features.build()).build();
+        }
         AnalysisResults results = service.analyze(parameters).execute();
         /* Printning */
         System.out.println("Inställningar:");
@@ -228,7 +247,7 @@ public class testModel_1 {
     }
 
     public static void setVERSION(String VERSION) {
-        testModel_1.VERSION = VERSION;
+        TestModel.VERSION = VERSION;
     }
 
     class model{
