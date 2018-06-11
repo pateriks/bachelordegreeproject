@@ -1,4 +1,4 @@
-public class ThesisEssayScorer {
+public class ThesisExaminer {
     /*
     To be implemented
 
