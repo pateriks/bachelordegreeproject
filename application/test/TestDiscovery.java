@@ -291,7 +291,7 @@ public class TestDiscovery {
         DocumentAccepted dA = null;
         if (!fileName.equalsIgnoreCase("")) {
             dA = addDoc(service, fileName, environmentId, collectionId);
-            if(!dA.getStatus().equalsIgnoreCase("processig")){
+            if(!dA.getStatus().equalsIgnoreCase("processing")){
                 success = true;
             }
                 /*try {
@@ -403,7 +403,7 @@ public class TestDiscovery {
         DocumentStatus documentStatus = docStatus(discovery, fileName, environmentId, collectionId);
         int timeLimit = 100;
         int i = 0;
-        System.out.println("[");
+        System.out.print("[");
         while (documentStatus.getStatus().equalsIgnoreCase("processing") & i < timeLimit) {
             System.out.print(">");
             documentStatus = docStatus(discovery, fileName, environmentId, collectionId);
@@ -417,6 +417,7 @@ public class TestDiscovery {
             i++;
         }
         System.out.println("]");
+        System.out.println(documentStatus);
         if(i < 99){
             QueryResponse eR = query(discovery, fileName, "", null, environmentId, collectionId);
             System.out.println();
