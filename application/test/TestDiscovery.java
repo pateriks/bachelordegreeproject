@@ -142,10 +142,10 @@ public class TestDiscovery {
         boolean flow = in.nextLine().toLowerCase().startsWith("y");
         if(flow){
             System.out.println("Credentials file?");
-            String setupData = in.nextLine();
+            String setupDataFileName = in.nextLine();
             FileInputStream fileInputStream = null;
             try {
-                fileInputStream = utility.Paths.getWorkingFileInputStream(setupData);
+                fileInputStream = utility.Paths.getWorkingFileInputStream(setupDataFileName);
                 ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
                 USERNAME = (String) objectInputStream.readObject();
                 System.out.println(USERNAME);
@@ -154,13 +154,13 @@ public class TestDiscovery {
                 MODEL_ID = (String) objectInputStream.readObject();
                 objectInputStream.close();
             } catch (Exception e) {
-                System.out.println("Problem reading file" + setupData);
+                System.out.println("Problem reading file" + setupDataFileName);
                 System.exit(1);
             }
             System.out.println("Collection API file?");
-            setupData = in.nextLine();
+            setupDataFileName = in.nextLine();
             try {
-                fileInputStream = utility.Paths.getWorkingFileInputStream(setupData);
+                fileInputStream = utility.Paths.getWorkingFileInputStream(setupDataFileName);
                 ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
                 environmentId = (String) objectInputStream.readObject();
                 System.out.println(USERNAME);
@@ -169,7 +169,7 @@ public class TestDiscovery {
                 configurationId = (String) objectInputStream.readObject();
                 objectInputStream.close();
             } catch (Exception e) {
-                System.out.println("Problem reading file" + setupData);
+                System.out.println("Problem reading file" + setupDataFileName);
                 System.exit(1);
             }
             if(test.contains("delete")) {
@@ -294,6 +294,7 @@ public class TestDiscovery {
             if(!dA.getStatus().equalsIgnoreCase("processing")){
                 success = true;
             }
+            //För att spara en session
                 /*try {
                     utility.Paths.saveObj(DOCUMENT_IDS, "session");
                 } catch (IOException e) {
@@ -307,7 +308,8 @@ public class TestDiscovery {
             try {
                 System.out.println(getHTML(eR));
             } catch (ParseException e) {
-                System.out.println("HTML parse exception");
+                System.out.println("HTML-parse exception");
+                System.exit(1);
             }
             System.out.println("End of output ******************************");
         }
@@ -320,7 +322,8 @@ public class TestDiscovery {
         try {
             System.out.println(gson.toJson(textResultsParse(queryResponse.toString())));
         } catch (ParseException e) {
-            e.printStackTrace();
+            System.out.println("Parse exception");
+            System.exit(1);
         }
         System.out.println("End of output ******************************");
     }
@@ -328,13 +331,13 @@ public class TestDiscovery {
     public static void testDelete(Discovery service, String documentId, String environmentId, String collectionId){
         {
             String output = "";
-            boolean empty;
+            boolean isEmpty;
             try{
-                empty = DOCUMENT_IDS.isEmpty();
+                isEmpty = DOCUMENT_IDS.isEmpty();
             }catch (NullPointerException e){
-                empty = true;
+                isEmpty = true;
             }
-            if (empty) { //Radera ett dokument
+            if (isEmpty) { //Radera ett dokument
                 output = deleteDoc(service, documentId, environmentId, collectionId)? "{Deleted}" : "{ErrorDeleting}";
             } else { //Radera alla dokument
                 String[] documentIds = new String[3];
